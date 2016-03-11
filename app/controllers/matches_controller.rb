@@ -2,7 +2,7 @@ class MatchesController < ApplicationController
 
   def index
     @user = User.find(session[:id])
-    @matches = @user.matches
+    @matches = @user.first_user_matches + @user.second_user_matches
     respond_to do |format|
       format.json {render json: [@user, @matches]}
     end
