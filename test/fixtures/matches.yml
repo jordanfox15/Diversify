@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  first_user_id: MyString
-  second_user_id: MyString
-
-two:
-  first_user_id: MyString
-  second_user_id: MyString
