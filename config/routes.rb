@@ -3,8 +3,9 @@ Rails.application.routes.draw do
 
   namespace 'api' do
     resources :users
-    resources :messages
-    resources :matches
+    resources :matches do
+      resources :messages
+    end
     resources :topics
   end
   # The priority is based upon order of creation: first created -> highest priority.
