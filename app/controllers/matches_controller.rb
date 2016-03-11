@@ -17,7 +17,15 @@ class MatchesController < ApplicationController
   end
 
   def create
-    @match = Match.new(params)
+    @match = Match.new(params[:match])
+    respond_to do |format|
+      format.json {render json: @match}
+    end
+  end
+
+  def update
+    @match = Match.find(params[:id])
+    @match.topic_id = rand(1..(Topic.all.length + 1))
     respond_to do |format|
       format.json {render json: @match}
     end
