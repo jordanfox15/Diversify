@@ -1,4 +1,4 @@
-class InterestsController < ApplicationController
+class Api::InterestsController < ApplicationController
 
   def index
     @interests = Interest.all
