@@ -2,10 +2,15 @@ Rails.application.routes.draw do
 
 
   namespace :api do
+    get 'users/profile'
+    get 'users/interests'
+
     resources :users
+
     resources :matches do
       resources :messages
     end
+
     resources :topics
     delete "sessions" => "sessions#destroy", :as => "sessions"
     resources :sessions
