@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('badgeApp', ['ngMaterial', 'ui.router'])
+  angular.module('diversifyApp', ['ngMaterial', 'ui.router'])
   // ROUTER
     .config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider',
       function($mdThemingProvider, $stateProvider, $urlRouterProvider){
@@ -39,12 +39,59 @@
               templateUrl: '/templates/partials/header.html'
             },
             'content': {
-          controller: 'ListController',
+          controller: 'loginController',
               templateUrl: '/templates/sessions/new.html'
             }
         }
         })
-
+        .state('register', {
+          url: '/register',
+          views: {
+            'header': {
+              templateUrl: '/templates/partials/header.html'
+            },
+            'content': {
+          controller: 'ListController',
+              templateUrl: '/templates/users/new.html'
+            }
+        }
+        })
+        .state('profile', {
+          url: '/profile',
+          views: {
+            'header':{
+              templateUrl: '/templates/partials/header.html'
+            },
+            'content':{
+              controller: 'profileController',
+              templateUrl: '/templates/users/profile.html'
+            }
+          }
+        })
+        .state('demo', {
+          url: '/demo',
+          views: {
+            'header':{
+              templateUrl: '/templates/partials/header.html'
+            },
+            'content':{
+              controller: 'demoController',
+              templateUrl: '/templates/users/demo.html'
+            }
+          }
+        })
+        .state('interests', {
+          url: '/interests',
+          views: {
+            'header':{
+              templateUrl: '/templates/partials/header.html'
+            },
+            'content':{
+              controller: 'interestsController',
+              templateUrl: '/templates/users/interests.html'
+            }
+          }
+        })
       }])
 
     // CONTROLLERS
@@ -85,22 +132,78 @@
     var todos = [ item, item2, item3]
 
     $scope.todos = todos
-    
+
     }])
-    
-    .controller('ShowController', ['$state', '$stateParams', '$scope', '$http', function($state, $stateParams, $scope, $http){
 
-      var teacherId = $stateParams.teacherId
-      $http({
-        method: 'GET',
-        dataType: 'json',
-        url: 'http://localhost:3000/v1/api/teachers/' + teacherId
-      }).success(function(data){
-        $scope.teacher = data
-      }).error(function(error){
-        console.log(error);
-      })
+    // .controller('ShowController', ['$state', '$stateParams', '$scope', '$http', function($state, $stateParams, $scope, $http){
 
-    }]);
+    //   var teacherId = $stateParams.teacherId
+    //   $http({
+    //     method: 'GET',
+    //     dataType: 'json',
+    //     url: 'http://localhost:3000/v1/api/teachers/' + teacherId
+    //   }).success(function(data){
+    //     $scope.teacher = data
+    //   }).error(function(error){
+    //     console.log(error);
+    //   })
+
+    // }])
+
+    .controller("loginController", ['$scope', '$http', '$window', function($scope, $http, $window){
+      $scope.user = {};
+      $scope.processForm= function(){
+        $http({
+          method: 'POST',
+          url: 'http://localhost:3000/api/sessions',
+          data: $scope.user
+        }).success(function(data){
+          $window.sessionStorage.accessToken = data.token;
+        });
+      };
+    }])
+
+      .controller("profileController", ['$scope', '$http', '$window', function($scope, $http, $window){
+        $scope.user = {};
+        $http({
+          method: 'GET',
+          url: 'http://localhost:3000/api/users/profile',
+          headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+          }
+        }).success(function(data){
+            $scope.user = data
+            console.log(data)
+        });
+    }])
+
+    .controller("demoController", ['$scope', '$http', '$window', function($scope, $http, $window){
+        $scope.user = {};
+        $http({
+          method: 'GET',
+          url: 'http://localhost:3000/api/users/profile',
+          headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+          }
+        }).success(function(data){
+            $scope.user = data
+            console.log(data)
+        });
+    }])
+
+    .controller("interestsController", ['$scope', '$http', '$window', function($scope, $http, $window){
+        $scope.user = {};
+        $http({
+          method: 'GET',
+          url: 'http://localhost:3000/api/users/profile',
+          headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+          }
+        }).success(function(data){
+            $scope.user = data
+            console.log(data)
+        });
+    }])
+
+      ;
+
+
 
 })();

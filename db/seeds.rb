@@ -23,7 +23,7 @@ Interest.delete_all
 Topic.delete_all
 UserInterest.delete_all
 
-100.times do
+20.times do
   users = User.create([first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
                        password: "password",
@@ -38,9 +38,9 @@ UserInterest.delete_all
                        age: rand(18..80)])
 end
 
-250.times do
-  matches = Match.create([first_user_id: rand(1..100),
-                          second_user_id: rand(1..100)])
+20.times do
+  matches = Match.create([first_user_id: rand(1..20),
+                          second_user_id: rand(1..20)])
 end
 
 Match.all.each do |match|
@@ -55,7 +55,7 @@ Match.all.each do |match|
                             match_id: match.id])
 end
 
-100.times do
+15.times do
   interests = Interest.create([name: Faker::Commerce.product_name])
 end
 
@@ -66,7 +66,7 @@ User.all.each do |user|
   end
 end
 
-100.times do
+15.times do
   topics = Topic.create([ name: Faker::Commerce.department(1)])
 end
 
