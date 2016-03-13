@@ -14,7 +14,7 @@
               templateUrl: '/templates/partials/header.html'
             },
             'content': {
-          controller: 'ListController',
+          controller: '',
               templateUrl: '/templates/index.html'
             }
           }
@@ -92,6 +92,14 @@
             }
           }
         })
+        .state('logout',{
+          url: '/logout',
+          views: {
+            'content':{
+              controller: 'logoutController'
+            }
+          }
+        })
       }])
 
     // CONTROLLERS
@@ -150,7 +158,7 @@
 
     // }])
 
-    .controller("loginController", ['$scope', '$http', '$window', function($scope, $http, $window){
+    .controller("loginController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
       $scope.user = {};
       $scope.processForm= function(){
         $http({
@@ -159,6 +167,7 @@
           data: $scope.user
         }).success(function(data){
           $window.sessionStorage.accessToken = data.token;
+          $state.go('profile')
         });
       };
     }])
@@ -202,6 +211,20 @@
         });
     }])
 
+    .controller("logoutController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
+
+        $scope.user = {};
+        $http({
+          method: 'DELETE',
+          url: 'http://localhost:3000/api/sessions',
+          headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+          }
+        }).success(function(data){
+            $window.sessionStorage.removeItem('accessToken');
+            console.log($window.sessionStorage.accessToken)
+            $state.go('home')
+        });
+    }])
       ;
 
 
