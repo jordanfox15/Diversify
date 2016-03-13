@@ -1,4 +1,5 @@
 class Api::UsersController < ApplicationController
+  skip_before_action :authenticate, only: :create
 
   def profile
     @user = current_user
@@ -18,12 +19,18 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.password = params[:password]
+    @user.password_confirmation = params[:password_confirmation]
     if @user.save!
-      render json: @user
+      token = AuthToken.issue(user_id: @user.id)
+      $redis.hset(token, 'user_id', @user.id)
+      $redis.expire(token, 60.minutes.to_i)
+      render json: {user: @user, token: token}
     else
       render json: @user.errors
     end
   end
+
 
   def update
     @user = User.find(params[:id])
@@ -38,7 +45,7 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :ethnicity, :email, :password, :password_confirmation, :religion, :sex_or, :ses, :country, :gender, :age, :interest_ids => [])
+    params.require(:user).permit(:first_name, :last_name, :race, :email, :religion, :sex_or, :ses, :country, :gender, :age, :interest_ids => [])
   end
 
 
