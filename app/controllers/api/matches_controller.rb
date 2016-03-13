@@ -7,7 +7,7 @@ class Api::MatchesController < ApplicationController
   end
 
   def show
-    @user = User.find(session[:id])
+    @user = current_user
     @match = Match.find(params[:id])
       render json: [@user, @match]
   end
