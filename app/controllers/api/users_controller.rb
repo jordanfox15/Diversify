@@ -7,7 +7,7 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
+    if @user.save!
       render json: @user
     else
       render json: @user.errors
@@ -27,8 +27,8 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :password, :ethnicity, :email, :religion, :sex_or, :ses, :country, :gender, :age)
+    params.require(:user).permit(:first_name, :last_name, :ethnicity, :email, :password, :password_confirmation, :religion, :sex_or, :ses, :country, :gender, :age)
   end
-    
+
 
 end

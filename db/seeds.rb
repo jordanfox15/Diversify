@@ -27,6 +27,7 @@ UserInterest.delete_all
   users = User.create([first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
                        password: "password",
+                       password_confirmation: "password",
                        race: race.sample,
                        email: Faker::Internet.email,
                        religion: religions.sample,
