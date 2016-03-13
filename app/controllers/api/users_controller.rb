@@ -2,7 +2,18 @@ class Api::UsersController < ApplicationController
 
   def profile
     @user = current_user
+    render json: @user, :include => :interests
+  end
+
+  def edit_profile
+    @user = current_user
+      @user.update(user_params)
     render json: @user
+  end
+
+  def interests
+    @user = current_user
+    render json: @user.interests
   end
 
   def create
@@ -27,7 +38,7 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :ethnicity, :email, :password, :password_confirmation, :religion, :sex_or, :ses, :country, :gender, :age)
+    params.require(:user).permit(:first_name, :last_name, :ethnicity, :email, :password, :password_confirmation, :religion, :sex_or, :ses, :country, :gender, :age, :interest_ids => [])
   end
 
 
