@@ -1,7 +1,7 @@
 class Api::MatchesController < ApplicationController
 
   def index
-    @user = User.find(session[:id])
+    @user = current_user
     @matches = @user.first_user_matches + @user.second_user_matches
       render json: [@user, @matches]
   end

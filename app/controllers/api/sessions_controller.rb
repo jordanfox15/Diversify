@@ -1,21 +1,23 @@
+require 'authtoken'
 class Api::SessionsController < ApplicationController
 
+  skip_before_action :authenticate, only: :create
+
   def create
-    @user = User.find_by_email(params[:email])
-    if @user.password == params[:password]
-      session[:id] = @user.id
-      respond_to do |format|
-        format.json {render json: session}
-      end
+    if user = Session.authenticate(params[:email], params[:password])
+      token = AuthToken.issue(user_id: user.id)
+      p token
+      $redis.hset(token, 'user_id', user.id)
+      $redis.expire(token, 20.minutes.to_i)
+      render json: {user: user, token: token}
     else
-      # redirect_to home_url
+      render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
   end
 
   def destroy
-    session.delete[:id]
-    respond_to do |format|
-      format.json
-    end
+    $redis.del(current_token)
+    render nothing: true, status: :ok, content_type: 'application/json'
   end
+
 end

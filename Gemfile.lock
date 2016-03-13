@@ -73,6 +73,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
+    jwt (1.5.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -85,6 +86,7 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     pg (0.18.4)
     rack (1.6.4)
+    rack-cors (0.4.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.5.1)
@@ -114,6 +116,7 @@ GEM
     rake (11.1.0)
     rdoc (4.2.2)
       json (~> 1.4)
+    redis (3.2.2)
     rspec-core (3.4.3)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -177,8 +180,11 @@ DEPENDENCIES
   faker
   jbuilder (~> 2.0)
   jquery-rails
+  jwt
   pg (~> 0.15)
+  rack-cors
   rails (= 4.2.5.1)
+  redis
   rspec-rails
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
