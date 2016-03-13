@@ -11,3 +11,7 @@
 /log/*
 !/log/.keep
 /tmp
+
+#Ignore Node Modules
+/angular-app/bower_components/*
+/angular-app/node_modules/*
