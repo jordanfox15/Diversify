@@ -185,7 +185,7 @@
         });
     }])
 
-    .controller("demoController", ['$scope', '$http', '$window', function($scope, $http, $window){
+    .controller("demoController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
         $scope.user = {};
         $http({
           method: 'GET',
@@ -196,6 +196,16 @@
             $scope.user = data
             console.log(data)
         });
+        $scope.processForm= function(){
+        $http({
+          method: 'PATCH',
+          url: 'http://localhost:3000/api/users/' + $scope.user.id,
+          data: $scope.user,
+          headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
+        }).success(function(data){
+          $state.go('profile')
+        });
+      };
     }])
 
     .controller("interestsController", ['$scope', '$http', '$window', function($scope, $http, $window){
