@@ -92,6 +92,10 @@
             }
           }
         })
+        .state('logout',
+            'content':{
+              controller: 'logoutController'
+        })
       }])
 
     // CONTROLLERS
@@ -202,6 +206,17 @@
         });
     }])
 
+    .controller("logoutController", ['$scope', '$http', '$window', function($scope, $http, $window){
+        $scope.user = {};
+        $http({
+          method: 'DESTROY',
+          url: 'http://localhost:3000/api/sessions/destory',
+          headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+          }
+        }).success(function(data){
+            console.log(data)
+        });
+    }])
       ;
 
 
