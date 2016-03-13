@@ -1,7 +1,7 @@
 require 'authtoken'
 class Api::SessionsController < ApplicationController
 
-  skip_before_action :authenticate, only: :create
+  skip_before_action :authenticate
 
   def create
     if user = Session.authenticate(params[:email], params[:password])
