@@ -10,7 +10,7 @@ race = ["White", "Black", "Native American", "Latino/Hispanic", "Asian", "Pacifi
 
 religions = ["Catholicism", "Christiany", "Judaism", "Islam", "Atheism", "Buddhism", "Shintoism", "Hinduism", "Taoism", "Maori", "Wiccan"]
 
-sex_ors = ["Heterosexual", "Gay/Lesbian", "Queer" "Bisexual", "Transgender", "Asexual"]
+sex_ors = ["Heterosexual", "Gay/Lesbian", "Queer", "Bisexual", "Transgender", "Asexual"]
 
 ses = ["Upper-SES", "Middle-SES", "Low-SES"]
 
