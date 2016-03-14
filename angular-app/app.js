@@ -100,6 +100,14 @@
             }
           }
         })
+        .state('testmatch',{
+          url: '/testmatch',
+          views: {
+            'content':{
+              controller: 'testmatchController'
+            }
+          }
+        })
       }])
 
     // CONTROLLERS
@@ -284,6 +292,16 @@
               $state.go('demo')
           });
         };
+    }])
+
+    .controller("testmatchController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
+        $scope.user = {};
+          $http({
+            method: 'GET',
+            url: 'http://localhost:3000/api/matches/random',
+          }).success(function(data){
+              console.log(data);
+          });
     }])
       ;
 

@@ -1,5 +1,7 @@
 class Api::MatchesController < ApplicationController
 
+  skip_before_action :authenticate, only: :random
+
   def index
     @user = current_user
     @matches = @user.first_user_matches + @user.second_user_matches
@@ -30,18 +32,38 @@ class Api::MatchesController < ApplicationController
 
   private
 
+  def match_interests(first_matches, second_matches, count = 0)
+    if first_matches.include?(second_matches[count])
+      p "first"
+      return true
+    elsif count == (second_matches.length - 1)
+      p "none"
+      return false
+    else
+      p "second"
+      match_interests(first_matches, second_matches, count + 1)
+    end
+  end
+
   def create_match
     users = []
     first_user_interests = []
     second_user_interests = []
     first_user_demos = []
     second_user_demos = []
-    User.all.each do |user|
-      users.push(user.id)
+    users = User.all
+    (users.length / 2).times do
+      is_match = false
+      count = 1
+      while is_match == false  && count < users.length do
+      p "inside while loop"
+        first_user_interests = (users[0].interests)
+        second_user_interests = (users[count].interests)
+        is_match = match_interests(first_user_interests, second_user_interests)
+        p is_match
+        count += 1
+      end
     end
-    (users.length \ 2).times do |i|
-      first_user_interests.push(User.find(users[0]).interests)
-
   end
 
   def match_params
