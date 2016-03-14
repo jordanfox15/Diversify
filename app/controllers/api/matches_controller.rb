@@ -9,7 +9,7 @@ class Api::MatchesController < ApplicationController
   def show
     @user = current_user
     @match = Match.find(params[:id])
-      render json: [@user, @match]
+      render json:  @match, :include => [:first_user, :second_user]
   end
 
 #  Create action - Not needed for front end use
