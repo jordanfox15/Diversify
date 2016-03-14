@@ -66,7 +66,7 @@ class Api::MatchesController < ApplicationController
         count += 1
       end
     end
-    return count, is_match
+    return count
   end
 
   def mis_match(users, count)
@@ -77,31 +77,41 @@ class Api::MatchesController < ApplicationController
     return count, not_match
   end
 
-  def make_match(users, count, is_match, not_match)
-    if is_match == true && not_match == true
-      Match.create([first_user_id: users[0].id, second_user_id: users[count].id])
-      users.delete_at(0)
-      users.delete_at(count - 1)
-      return true
-    else
-      return false
-    end
+  def make_match(users, count)
+    Match.create([first_user_id: users[0].id, second_user_id: users[count].id])
+    users.delete_at(count)
+    users.delete_at(0)
   end
 
-  def match_calls(users, matches, count = 1)
+  def match_calls(users, matches, no_matches, count = 1)
 
-    interest_match = match_users(users, matches, count)
-    count = interest_match[0]
-    is_match = interest_match[1]
+    count = match_users(users, matches, count)
 
-    demo_match = mis_match(users, count)
-    count = demo_match[0]
-    not_match = demo_match[1]
+    if count >= users.length && users.length > 0
+      no_matches.push(users[0])
+      users.delete_at(0)
+      match_calls(users, matches, no_matches)
+    end
 
-    matched = make_match(users, count, is_match, not_match)
+    if count < users.length
+      demo_match = mis_match(users, count)
+      count = demo_match[0]
+      not_match = demo_match[1]
+    end
 
-    if matched == false
-      match_calls(users, count + 1)
+    if users.length >= 2 && count < users.length
+      make_match(users, count)
+    end
+
+    return no_matches
+
+  end
+
+  def create_non_matched_matches(no_matches)
+    while no_matches.length > 1
+      Match.create([first_user_id: no_matches[0].id, second_user_id: no_matches[1].id])
+      no_matches.delete_at(0)
+      no_matches.delete_at(0)
     end
   end
 
@@ -116,15 +126,18 @@ class Api::MatchesController < ApplicationController
       matches.push(match)
     end
 
-    ((users.length / 2) - 1).times do
+    no_matches = []
 
-      match_calls(users, matches)
-
-      if users.length <= 3
-        Match.create([first_user_id: users[0].id, second_user_id: users[1].id])
-      end
-
+    while users.length >= 3 do
+      no_matches = match_calls(users, matches, no_matches)
     end
+
+    if users.length >= 2
+      Match.create([first_user_id: users[0].id, second_user_id: users[1].id])
+    end
+
+    create_non_matched_matches(no_matches)
+
   end
 
   def match_params
