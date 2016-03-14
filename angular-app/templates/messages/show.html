@@ -1,22 +1,20 @@
+
 <main layout-align="center">
   <div flex-gt-sm="50" flex>
     <md-toolbar layout="row" class="md-hue-2">
       <div class="md-toolbar-tools">
-        <span>Matches</span>
+        <span>Messages</span>
       </div>
     </md-toolbar>
     <md-content>
       <md-list flex>
         <md-subheader class="md-no-sticky">3 line item</md-subheader>
-        <a ui-sref="messages"  >
-<md-list-item md-ink-ripple="#" class="md-3-line" ng-repeat="match in matches">
+        <a ui-sref="login"  >
+<md-list-item md-ink-ripple="#" class="md-3-line" ng-repeat="item in todos">
           <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
           <div class="md-list-item-text" layout="column">
-            <h3 ng-if="match.first_user.id == currentUserId">{{
-              match.second_user.first_name + match.second_user.last_name}}</h3>
-            <h3 ng-if="match.second_user.id == currentUserId">{{
-              match.first_user.first_name + match.first_user.last_name}}</h3>
-            <h4><span>{{ item.time }}</span></h4>
+            <h3>{{ item.who }}</h3>
+            <h4>{{ item.what }}<span>{{ item.time }}</span></h4>
             <p>{{ item.notes }}</p>
           </div>
         </md-list-item></a>

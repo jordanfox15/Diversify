@@ -32,6 +32,18 @@
         }
           }
         )
+        .state('messages', {
+          url: '/messages',
+          views: {
+            'header': {
+              templateUrl: '/templates/partials/header.html'
+            },
+            'content': {
+          controller: 'messagesController',
+              templateUrl: '/templates/messages/show.html'
+            }
+        }
+        })
         .state('login', {
           url: '/login',
           views: {
@@ -120,9 +132,30 @@
 
     }])
 
-    .controller('MatchesController', ['$scope', '$http', function($scope, $http){
+    .controller('MatchesController', ['$scope', '$http', '$window', function($scope, $http, $window){
 
-    var item = {}
+        $scope.currentUserId = $window.sessionStorage.userId
+      console.log($window.sessionStorage.userId)
+      console.log($scope.currentUserId)
+        $http({
+          method: 'GET',
+          url: 'http://localhost:3000/api/matches',
+          headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+          }
+        }).success(function(data){
+          console.log(data)
+          $scope.matches = data
+
+        }).error(function(error){
+          console.log(error);
+        });
+
+
+    }])
+
+    .controller('messagesController', ['$scope', '$http', function($scope, $http){
+
+    var matches  = {}
     item.face = "https://avatars3.githubusercontent.com/u/7256178?v=3&s=460"
     item.who = "Kevin Huang"
     item.notes = "RSpec is a lot of fun."
@@ -167,7 +200,8 @@
           data: $scope.user
         }).success(function(data){
           $window.sessionStorage.accessToken = data.token;
-          $state.go('profile')
+          $window.sessionStorage.userId = data.user.id;
+          console.log ($window.sessionStorage.userId)
         });
       };
     }])
@@ -180,6 +214,7 @@
           headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
           }
         }).success(function(data){
+          console.log(data)
             $scope.user = data
         });
     }])
@@ -281,6 +316,7 @@
             data: $scope.user
           }).success(function(data){
               $window.sessionStorage.accessToken = data.token;
+          $window.sessionStorage.userId = data.user;
               $state.go('demo')
           });
         };

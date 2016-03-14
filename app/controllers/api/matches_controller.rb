@@ -3,7 +3,7 @@ class Api::MatchesController < ApplicationController
   def index
     @user = current_user
     @matches = @user.first_user_matches + @user.second_user_matches
-      render json: [@user, @matches]
+      render json: @matches, :include =>  [:first_user, :second_user]
   end
 
   def show
