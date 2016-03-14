@@ -3,34 +3,11 @@
 <md-content md-theme="docs-dark">
 <h2>{{user.first_name}} {{user.last_name}}</h2>
 <form ng-submit='processForm()'>
-<md-input-container>
-<label>Age</label>
-<input ng-model="user.age" type="text">
-</md-input-container>
-<md-input-container>
-<label>Country</label>
-<input ng-model="user.country" type="text">
-</md-input-container>
-<md-input-container>
-<label>Sexual Orientation</label>
-<input ng-model="user.sex_or" type="text">
-</md-input-container>
-<md-input-container>
-<label>Religion</label>
-<input ng-model="user.religion" type="text">
-</md-input-container>
-<md-input-container>
-<label>Gender</label>
-<input ng-model="user.gender" type="text">
-</md-input-container>
-<md-input-container>
-<label>Race</label>
-<input ng-model="user.race" type="text">
-</md-input-container>
-<md-input-container>
-<label>SES</label>
-<input ng-model="user.ses" type="text">
-</md-input-container>
+<div flex="50" ng-repeat="interest in interests">
+  <md-checkbox ng-checked="exists(interest, selected)" ng-click="toggle(interest, selected)">
+  {{ interest.name }} <span ng-if="exists(interest, selected)">selected</span>
+  </md-checkbox>
+</div>
 <md-input-container layout-align="center center">
 <div layout="row" layout-sm="column" layout-margin>
   <md-button class="md-raised" flex="auto" type='submit'>Save</md-button>

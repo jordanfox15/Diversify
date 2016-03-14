@@ -1,6 +1,21 @@
 class Api::UsersController < ApplicationController
-
   skip_before_action :authenticate, only: :create
+
+  def profile
+    @user = current_user
+    render json: @user, :include => :interests
+  end
+
+  def edit_profile
+    @user = current_user
+      @user.update(user_params)
+    render json: @user
+  end
+
+  def interests
+    @user = current_user
+    render json: @user.interests
+  end
 
   def create
     @user = User.new(user_params)
@@ -16,10 +31,6 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  def profile
-    @user = current_user
-    render json: @user
-  end
 
   def update
     @user = User.find(params[:id])
@@ -34,7 +45,7 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :ethnicity, :email, :religion, :sex_or, :ses, :country, :gender, :age)
+    params.require(:user).permit(:first_name, :last_name, :race, :email, :religion, :sex_or, :ses, :country, :gender, :age, :interest_ids => [])
   end
 
 
