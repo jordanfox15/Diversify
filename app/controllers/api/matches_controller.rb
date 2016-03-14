@@ -67,7 +67,7 @@ class Api::MatchesController < ApplicationController
         if users[0].race != users[count].race || users[0].sex_or != users[count].sex_or || users[0].country != users[count].country || users[0].religion != users[count].religion || users[0].ses != users[count].ses
           not_match = true
         else
-          p "shittierballs"
+          p "no mis-match"
         end
       end
 
@@ -76,7 +76,7 @@ class Api::MatchesController < ApplicationController
         users.delete_at(0)
         users.delete_at(count - 1)
       else
-        p "shitballs"
+        p "no total match"
       end
 
       if users.length <= 3
