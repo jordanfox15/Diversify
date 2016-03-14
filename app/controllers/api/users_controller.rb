@@ -13,7 +13,7 @@ class Api::UsersController < ApplicationController
   end
 
   def interests
-    @user = current_user
+    @user = User.find(params[:id])
     render json: @user.interests
   end
 
