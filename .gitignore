@@ -15,3 +15,6 @@
 #Ignore Node Modules
 /angular-app/bower_components/*
 /angular-app/node_modules/*
+
+#Ignore Redis dump
+*.rdb

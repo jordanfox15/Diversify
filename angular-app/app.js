@@ -128,6 +128,19 @@
       }
     }
   })
+
+  .state('matchInfo', {
+    url: '/matches/:matchId/info',
+    views: {
+      'header': {
+        templateUrl: '/templates/partials/header.html'
+      },
+    'content': {
+      templateUrl: '/templates/matches/info.html',
+    controller: 'matchInfoController'
+    },
+    }
+  })
 }])
 
 // CONTROLLERS
@@ -212,6 +225,7 @@ $http({
 }).error(function(error){
   console.log(error);
 });
+  $scope.matchId = $stateParams.matchId
 
 $http({
   method: 'GET',
@@ -425,6 +439,50 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
         return $window.sessionStorage.getItem('accessToken') === null
       }
       // Refactor later into a service - kh
+    }])
+
+    .controller("matchInfoController", ['$scope','$window', '$state', '$http', '$stateParams', function($scope, $window, $state, $http, $stateParams){
+      $scope.currentUserId = $window.sessionStorage.userId
+      $http({
+    method: 'GET',
+    url: 'http://localhost:3000/api/matches/' + $stateParams.matchId ,
+    headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+      }
+    }).success(function(data){
+      console.log(data)
+      $scope.match = data
+      if ($scope.match.first_user.id == $scope.currentUserId ){
+      var recipientId = $scope.match.second_user.id
+      }
+      else if ($scope.match.second_user.id == $scope.currentUserId ){
+      var recipientId = $scope.match.first_user.id
+      }
+      $http({
+    method: 'GET',
+    url: 'http://localhost:3000/api/users/' + recipientId + '/interests',
+    headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+    }
+    }).success(function(data){
+      console.log("INTERESTS NOW EXISTS!")
+      $scope.recipientInterests = data
+      console.log(data)
+    });
+
+    $http({
+    method: 'GET',
+    url: 'http://localhost:3000/api/users/' + $scope.currentUserId + '/interests',
+    headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+    }
+    }).success(function(data){
+      console.log("INTERESTS NOW EXISTS!")
+      $scope.senderInterests = data
+      console.log(data)
+    });
+    }).error(function(error){
+      console.log(error);
+    });
+
+
     }])
 
 })();
