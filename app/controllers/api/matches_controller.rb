@@ -66,10 +66,14 @@ class Api::MatchesController < ApplicationController
         count += 1
       end
     end
-    return count, is_match
+    return count
   end
 
   def mis_match(users, count)
+    if count >= users.length
+      p "no match for"
+      p users[0]
+    end
     not_match = false
     if users[0].race != users[count].race || users[0].sex_or != users[count].sex_or || users[0].country != users[count].country || users[0].religion != users[count].religion || users[0].ses != users[count].ses
       not_match = true
@@ -77,32 +81,22 @@ class Api::MatchesController < ApplicationController
     return count, not_match
   end
 
-  def make_match(users, count, is_match, not_match)
-    if is_match == true && not_match == true
-      Match.create([first_user_id: users[0].id, second_user_id: users[count].id])
-      users.delete_at(0)
-      users.delete_at(count - 1)
-      return true
-    else
-      return false
-    end
+  def make_match(users, count)
+    Match.create([first_user_id: users[0].id, second_user_id: users[count].id])
+    users.delete_at(0)
+    users.delete_at(count - 1)
   end
 
   def match_calls(users, matches, count = 1)
 
-    interest_match = match_users(users, matches, count)
-    count = interest_match[0]
-    is_match = interest_match[1]
+    count = match_users(users, matches, count)
 
     demo_match = mis_match(users, count)
     count = demo_match[0]
     not_match = demo_match[1]
 
-    matched = make_match(users, count, is_match, not_match)
+    make_match(users, count)
 
-    if matched == false
-      match_calls(users, count + 1)
-    end
   end
 
   def create_match
@@ -116,15 +110,12 @@ class Api::MatchesController < ApplicationController
       matches.push(match)
     end
 
-    ((users.length / 2) - 1).times do
-
+    while users.length >= 4 do
       match_calls(users, matches)
-
-      if users.length <= 3
-        Match.create([first_user_id: users[0].id, second_user_id: users[1].id])
-      end
-
     end
+
+    Match.create([first_user_id: users[0].id, second_user_id: users[1].id])
+
   end
 
   def match_params
