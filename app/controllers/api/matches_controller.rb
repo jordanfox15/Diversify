@@ -70,10 +70,6 @@ class Api::MatchesController < ApplicationController
   end
 
   def mis_match(users, count)
-    if count >= users.length
-      p "no match for"
-      p users[0]
-    end
     not_match = false
     if users[0].race != users[count].race || users[0].sex_or != users[count].sex_or || users[0].country != users[count].country || users[0].religion != users[count].religion || users[0].ses != users[count].ses
       not_match = true
@@ -83,20 +79,40 @@ class Api::MatchesController < ApplicationController
 
   def make_match(users, count)
     Match.create([first_user_id: users[0].id, second_user_id: users[count].id])
+    users.delete_at(count)
     users.delete_at(0)
-    users.delete_at(count - 1)
   end
 
-  def match_calls(users, matches, count = 1)
+  def match_calls(users, matches, no_matches, count = 1)
 
     count = match_users(users, matches, count)
 
-    demo_match = mis_match(users, count)
-    count = demo_match[0]
-    not_match = demo_match[1]
+    if count >= users.length && users.length > 0
+      no_matches.push(users[0])
+      users.delete_at(0)
+      match_calls(users, matches, no_matches)
+    end
 
-    make_match(users, count)
+    if count < users.length
+      demo_match = mis_match(users, count)
+      count = demo_match[0]
+      not_match = demo_match[1]
+    end
 
+    if users.length >= 2 && count < users.length
+      make_match(users, count)
+    end
+
+    return no_matches
+
+  end
+
+  def create_non_matched_matches(no_matches)
+    while no_matches.length > 1
+      Match.create([first_user_id: no_matches[0].id, second_user_id: no_matches[1].id])
+      no_matches.delete_at(0)
+      no_matches.delete_at(0)
+    end
   end
 
   def create_match
@@ -110,11 +126,17 @@ class Api::MatchesController < ApplicationController
       matches.push(match)
     end
 
-    while users.length >= 4 do
-      match_calls(users, matches)
+    no_matches = []
+
+    while users.length >= 3 do
+      no_matches = match_calls(users, matches, no_matches)
     end
 
-    Match.create([first_user_id: users[0].id, second_user_id: users[1].id])
+    if users.length >= 2
+      Match.create([first_user_id: users[0].id, second_user_id: users[1].id])
+    end
+
+    create_non_matched_matches(no_matches)
 
   end
 
