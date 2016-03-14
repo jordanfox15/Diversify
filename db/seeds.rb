@@ -38,9 +38,16 @@ UserInterest.delete_all
                        age: rand(18..80)])
 end
 
+user_ids = []
+User.all.each do |user|
+  user_ids.push(user.id)
+end
+
+p user_ids
+
 20.times do
-  matches = Match.create([first_user_id: rand(1..20),
-                          second_user_id: rand(1..20)])
+  matches = Match.create([first_user_id: user_ids.sample,
+                          second_user_id: user_ids.sample])
 end
 
 Match.all.each do |match|
@@ -59,10 +66,15 @@ end
   interests = Interest.create([name: Faker::Commerce.product_name])
 end
 
+interest_ids = []
+Interest.all.each do |interest|
+  interest_ids.push(interest.id)
+end
+
 User.all.each do |user|
   10.times do
     user_interests = UserInterest.create([ user_id: user.id,
-                                           interest_id: rand(1..100)])
+                                           interest_id: interest_ids.sample])
   end
 end
 

@@ -51,7 +51,7 @@
               templateUrl: '/templates/partials/header.html'
             },
             'content': {
-          controller: 'ListController',
+              controller: 'registerController',
               templateUrl: '/templates/users/new.html'
             }
         }
@@ -181,11 +181,10 @@
           }
         }).success(function(data){
             $scope.user = data
-            console.log(data)
         });
     }])
 
-    .controller("demoController", ['$scope', '$http', '$window', function($scope, $http, $window){
+    .controller("demoController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
         $scope.user = {};
         $http({
           method: 'GET',
@@ -196,19 +195,67 @@
             $scope.user = data
             console.log(data)
         });
+        $scope.processForm= function(){
+        $http({
+          method: 'PATCH',
+          url: 'http://localhost:3000/api/users/' + $scope.user.id,
+          data: $scope.user,
+          headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
+        }).success(function(data){
+          $state.go('profile')
+        });
+      };
     }])
 
-    .controller("interestsController", ['$scope', '$http', '$window', function($scope, $http, $window){
-        $scope.user = {};
+    .controller("interestsController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
+        $scope.selected = [];
         $http({
           method: 'GET',
-          url: 'http://localhost:3000/api/users/profile',
+          url: 'http://localhost:3000/api/interests',
           headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
           }
         }).success(function(data){
-            $scope.user = data
+          console.log("INTERESTS NOW EXISTS!")
+            $scope.interests = data
             console.log(data)
         });
+
+        // $http({
+        //   method: 'GET',
+        //   url: 'http://localhost:3000/api/users/interests',
+        //   headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+        //   }
+        // }).success(function(data){
+        //     console.log("SELECTED NOW EXISTS!")
+        //     $scope.selected = data
+
+        //     console.log(data)
+        // });
+
+          $scope.toggle = function (item, list) {
+          var idx = list.indexOf(item);
+          if (idx > -1) list.splice(idx, 1);
+          else list.push(item);
+          console.log(list)
+      };
+
+      $scope.exists = function (item, list) {
+        return list.indexOf(item) > -1;
+      };
+
+      $scope.processForm = function(){
+        var interest_ids = $scope.selected.map(function(myInterest){
+          return myInterest.id;
+        })
+        $http({
+          method: 'PATCH',
+          url: 'http://localhost:3000/api/users/profile',
+          data: {user: {interest_ids: interest_ids}},
+          headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
+        }).success(function(data){
+          $state.go('profile')
+        });
+      }
     }])
 
     .controller("logoutController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
@@ -221,9 +268,22 @@
           }
         }).success(function(data){
             $window.sessionStorage.removeItem('accessToken');
-            console.log($window.sessionStorage.accessToken)
             $state.go('home')
         });
+    }])
+
+    .controller("registerController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
+        $scope.user = {};
+        $scope.processForm = function(){
+          $http({
+            method: 'POST',
+            url: 'http://localhost:3000/api/users',
+            data: $scope.user
+          }).success(function(data){
+              $window.sessionStorage.accessToken = data.token;
+              $state.go('demo')
+          });
+        };
     }])
       ;
 

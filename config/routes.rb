@@ -3,12 +3,13 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'users/profile'
+    patch 'users/profile' => "users#edit_profile", as: 'edit_profile'
     get 'users/interests'
 
     get 'matches/random'
 
     resources :users
-
+    resources :interests
     resources :matches do
       resources :messages
     end
