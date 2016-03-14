@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     get 'users/profile'
     patch 'users/profile' => "users#edit_profile", as: 'edit_profile'
-    get 'users/interests'
+    get 'users/:id/interests' => "users#interests", as: 'user_interests'
 
     get 'matches/random'
 

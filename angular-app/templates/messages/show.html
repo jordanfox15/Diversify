@@ -2,11 +2,14 @@
 <main layout-align="center">
 <div flex-gt-sm="50" flex>
   <md-toolbar layout="row" class="md-hue-2">
-  <div class="md-toolbar-tools">
+  <div class="md-toolbar-tools" layout="row" layout-align="space-around center">
     <span ng-if="match.first_user.id == currentUserId">{{
-      match.second_user.first_name + match.second_user.last_name}}</span>
+      match.second_user.first_name + " " + match.second_user.last_name}}</span>
     <span ng-if="match.second_user.id == currentUserId">{{
-      match.first_user.first_name + match.first_user.last_name}}</span>
+      match.first_user.first_name + " " + match.first_user.last_name}}</span>
+    <a ui-sref="matchInfo({matchId: matchId})">
+      <md-button class="md-raised md-primary">Match Info</md-button>
+    </a>
   </div>
   </md-toolbar>
   <md-content>
