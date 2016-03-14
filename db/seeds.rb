@@ -26,24 +26,22 @@ UserInterest.delete_all
 20.times do
   users = User.create([first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
+                       email: Faker::Internet.email,
                        password: "password",
                        password_confirmation: "password",
-                       race: race.sample,
-                       email: Faker::Internet.email,
-                       religion: religions.sample,
-                       sex_or: sex_ors.sample,
-                       ses: ses.sample,
-                       country: countries.sample,
+                       age: rand(18..80),
                        gender: ["male", "female", "other"].sample,
-                       age: rand(18..80)])
+                       race: race.sample,
+                       sex_or: sex_ors.sample,
+                       country: countries.sample,
+                       religion: religions.sample,
+                       ses: ses.sample])
 end
 
 user_ids = []
 User.all.each do |user|
   user_ids.push(user.id)
 end
-
-p user_ids
 
 20.times do
   matches = Match.create([first_user_id: user_ids.sample,
@@ -62,7 +60,7 @@ Match.all.each do |match|
                             match_id: match.id])
 end
 
-15.times do
+50.times do
   interests = Interest.create([name: Faker::Commerce.product_name])
 end
 
@@ -72,7 +70,7 @@ Interest.all.each do |interest|
 end
 
 User.all.each do |user|
-  10.times do
+  5.times do
     user_interests = UserInterest.create([ user_id: user.id,
                                            interest_id: interest_ids.sample])
   end

@@ -112,13 +112,18 @@
     }
   }
   })
-    }])
+        .state('testmatch',{
+          url: '/testmatch',
+          views: {
+            'content':{
+              controller: 'testmatchController'
+            }
+          }
+        })
+      }])
 
 // CONTROLLERS
 .controller('ListController', ['$scope', '$http', function($scope, $http){
-
-
-
   $http({
     method: 'GET',
   dataType: 'json',
@@ -133,7 +138,6 @@
 }])
 
 .controller('MatchesController', ['$scope', '$http', '$window', function($scope, $http, $window){
-
   $scope.currentUserId = $window.sessionStorage.userId
   console.log($window.sessionStorage.userId)
   console.log($scope.currentUserId)
@@ -354,6 +358,16 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
     });
   };
 }])
+
+    .controller("testmatchController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
+        $scope.user = {};
+          $http({
+            method: 'GET',
+            url: 'http://localhost:3000/api/matches/random',
+          }).success(function(data){
+              console.log(data);
+          });
+    }])
 ;
 
 
