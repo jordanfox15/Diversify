@@ -63,15 +63,15 @@ ActiveRecord::Schema.define(version: 20160311222056) do
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "password_digest"
-    t.string   "race"
     t.string   "email"
-    t.string   "religion"
-    t.string   "sex_or"
-    t.string   "ses"
-    t.string   "country"
-    t.string   "gender"
+    t.string   "password_digest"
     t.integer  "age"
+    t.string   "gender"
+    t.string   "race"
+    t.string   "sex_or"
+    t.string   "country"
+    t.string   "religion"
+    t.string   "ses"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
