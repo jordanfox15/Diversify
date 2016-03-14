@@ -26,16 +26,16 @@ UserInterest.delete_all
 20.times do
   users = User.create([first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
+                       email: Faker::Internet.email,
                        password: "password",
                        password_confirmation: "password",
-                       race: race.sample,
-                       email: Faker::Internet.email,
-                       religion: religions.sample,
-                       sex_or: sex_ors.sample,
-                       ses: ses.sample,
-                       country: countries.sample,
+                       age: rand(18..80)]),
                        gender: ["male", "female", "other"].sample,
-                       age: rand(18..80)])
+                       race: race.sample,
+                       sex_or: sex_ors.sample,
+                       country: countries.sample,
+                       religion: religions.sample,
+                       ses: ses.sample
 end
 
 user_ids = []

@@ -48,25 +48,40 @@ class Api::MatchesController < ApplicationController
     second_user_interests = []
     first_user_demos = []
     second_user_demos = []
+
     User.all.each do |user|
       users.push(user)
     end
+
     (users.length / 2).times do
+
       is_match = false
       count = 1
+
       while is_match == false  && count < users.length do
         first_user_interests = (users[0].interests)
         second_user_interests = (users[count].interests)
         is_match = match_interests(first_user_interests, second_user_interests)
         count += 1
       end
-      if is_match == true
+
+      not_match = false
+      while not_match == false
+        p "inside while loop"
+        if users[0].race != users[count].race || users[0].sex_or != users[count].sex_or || users[0].country != users[count].country || users[0].religion != users[count].religion || users[0].ses != users[count].ses
+          p "true"
+          not_match = true
+        end
+      end
+
+      if is_match == true && not_match == true
         Match.create([first_user_id: users[0].id, second_user_id: users[count].id])
         users.delete_at(0)
         users.delete_at(count)
       else
         p "shitballs"
       end
+
     end
   end
 
