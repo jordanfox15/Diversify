@@ -368,8 +368,12 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
               console.log(data);
           });
     }])
-;
 
-
+    .controller("headerController", ['$scope','$window', '$state', 'userFactory', function($scope, $window, $state, userFactory){
+      $scope.loggedOut = function(){
+        return $window.sessionStorage.getItem('accessToken') === null
+      }
+      // Refactor later into a service - kh
+    }])
 
 })();
