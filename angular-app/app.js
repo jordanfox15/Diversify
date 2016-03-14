@@ -120,6 +120,15 @@
       }
     }
   })
+  .state('topic',{
+    url: '/topic',
+    views: {
+      'content':{
+        controller: 'topicController'
+      }
+    }
+  })
+
   .state('matchInfo', {
     url: '/matches/:matchId/info',
     views: {
@@ -169,10 +178,53 @@
 
 }])
 
+// .controller('topicsController', ['$scope', '$http', '$window', function($scope, $http, $window){
+//   $scope.currentUserId = $window.sessionStorage.userId
+//   console.log($window.sessionStorage.userId)
+//   console.log($scope.currentUserId)
+//   $http({
+//     method: 'GET',
+//   url: 'http://localhost:3000/api/matches',
+//   headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+//   }
+//   }).success(function(data){
+//     console.log(data)
+//     $scope.matches = data
+
+//   }).error(function(error){
+//     console.log(error);
+//   });
+
+
+// }])
+
 .controller('messagesController', ['$scope', '$http', '$stateParams', '$window', '$state', function($scope, $http, $stateParams, $window, $state){
-  console.log($stateParams.matchId)
   $scope.currentUserId = $window.sessionStorage.userId
   $scope.message = {}
+  $scope.topic={}
+  $scope.generateTopic=function(){
+    $http({
+  method: 'GET',
+  url: 'http://localhost:3000/api/topics' ,
+  headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+  }
+}).success(function(data){
+  $scope.topic = data
+}).error(function(error){
+  console.log(error);
+});
+  }
+
+$http({
+  method: 'GET',
+  url: 'http://localhost:3000/api/topics' ,
+  headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
+  }
+}).success(function(data){
+  $scope.topic = data
+}).error(function(error){
+  console.log(error);
+});
   $scope.matchId = $stateParams.matchId
 
 $http({

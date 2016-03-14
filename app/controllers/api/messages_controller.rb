@@ -12,8 +12,14 @@ class Api::MessagesController < ApplicationController
       render json: {match: @match, messages: @messages}
   end
 
+  def topic
+    @topic = Topic.find(rand(31..45)).name
+    p @topic
+    render json: @topic
+  end
+
   private
-  
+
   def message_params
     params.require(:message).permit(:text, :sender_id, :recipient_id, :unread, :match_id)
   end
