@@ -160,8 +160,6 @@
 
     .controller("loginController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
       $scope.user = {};
-      $scope.loggedIn = false;
-
       $scope.processForm= function(){
         $http({
           method: 'POST',
