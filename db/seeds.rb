@@ -29,13 +29,13 @@ UserInterest.delete_all
                        email: Faker::Internet.email,
                        password: "password",
                        password_confirmation: "password",
-                       age: rand(18..80)]),
+                       age: rand(18..80),
                        gender: ["male", "female", "other"].sample,
                        race: race.sample,
                        sex_or: sex_ors.sample,
                        country: countries.sample,
                        religion: religions.sample,
-                       ses: ses.sample
+                       ses: ses.sample])
 end
 
 user_ids = []
