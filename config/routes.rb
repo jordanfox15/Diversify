@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     get 'users/profile'
     get 'users/interests'
 
+    get 'matches/random'
+
     resources :users
 
     resources :matches do

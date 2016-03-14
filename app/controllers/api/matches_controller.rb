@@ -24,7 +24,25 @@ class Api::MatchesController < ApplicationController
       render json: @match
   end
 
+  def random
+    create_match
+  end
+
   private
+
+  def create_match
+    users = []
+    first_user_interests = []
+    second_user_interests = []
+    first_user_demos = []
+    second_user_demos = []
+    User.all.each do |user|
+      users.push(user.id)
+    end
+    (users.length \ 2).times do |i|
+      first_user_interests.push(User.find(users[0]).interests)
+
+  end
 
   def match_params
     params.require(:match).permit(:first_user_id, :second_user_id)
