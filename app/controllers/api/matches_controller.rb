@@ -32,23 +32,37 @@ class Api::MatchesController < ApplicationController
 
   private
 
-  def match_interests(first_interests, second_interests, count = 0)
-    if first_interests.include?(second_interests[count])
+  def match_interests(first_interests, second_interests, interest_count = 0)
+    if first_interests.include?(second_interests[interest_count])
       return true
-    elsif count == (second_interests.length - 1)
+    elsif interest_count == (second_interests.length - 1)
       return false
     else
-      match_interests(first_interests, second_interests, count + 1)
+      match_interests(first_interests, second_interests, interest_count + 1)
     end
   end
 
-  def match_users(users, count)
+  def previously_matched(users, matches, is_match, count)
+    matches.each do |match|
+      if match.first_user_id == users[0].id.to_s && match.second_user_id == users[count].id.to_s
+        count += 1
+        is_match = false
+      end
+    end
+    return is_match, count
+  end
+
+  def match_users(users, matches, count)
     is_match = false
     while is_match == false  && count < users.length do
       first_user_interests = (users[0].interests)
       second_user_interests = (users[count].interests)
       is_match = match_interests(first_user_interests, second_user_interests)
-      if is_match == false
+      if is_match
+        match_before = previously_matched(users, matches, is_match, count)
+        is_match = match_before[0]
+        count = match_before[1]
+      else
         count += 1
       end
     end
@@ -74,8 +88,9 @@ class Api::MatchesController < ApplicationController
     end
   end
 
-  def match_calls(users, count = 1)
-    interest_match = match_users(users, count)
+  def match_calls(users, matches, count = 1)
+
+    interest_match = match_users(users, matches, count)
     count = interest_match[0]
     is_match = interest_match[1]
 
@@ -96,9 +111,14 @@ class Api::MatchesController < ApplicationController
       users.push(user)
     end
 
+    matches = []
+    Match.all.each do |match|
+      matches.push(match)
+    end
+
     ((users.length / 2) - 1).times do
 
-      match_calls(users)
+      match_calls(users, matches)
 
       if users.length <= 3
         Match.create([first_user_id: users[0].id, second_user_id: users[1].id])
