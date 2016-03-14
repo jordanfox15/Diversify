@@ -369,7 +369,7 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
           });
     }])
 
-    .controller("headerController", ['$scope','$window', '$state', 'userFactory', function($scope, $window, $state, userFactory){
+    .controller("headerController", ['$scope','$window', '$state', function($scope, $window, $state){
       $scope.loggedOut = function(){
         return $window.sessionStorage.getItem('accessToken') === null
       }
