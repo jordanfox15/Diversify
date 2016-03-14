@@ -34,13 +34,10 @@ class Api::MatchesController < ApplicationController
 
   def match_interests(first_matches, second_matches, count = 0)
     if first_matches.include?(second_matches[count])
-      p "first"
       return true
     elsif count == (second_matches.length - 1)
-      p "none"
       return false
     else
-      p "second"
       match_interests(first_matches, second_matches, count + 1)
     end
   end
@@ -51,17 +48,24 @@ class Api::MatchesController < ApplicationController
     second_user_interests = []
     first_user_demos = []
     second_user_demos = []
-    users = User.all
+    User.all.each do |user|
+      users.push(user)
+    end
     (users.length / 2).times do
       is_match = false
       count = 1
       while is_match == false  && count < users.length do
-      p "inside while loop"
         first_user_interests = (users[0].interests)
         second_user_interests = (users[count].interests)
         is_match = match_interests(first_user_interests, second_user_interests)
-        p is_match
         count += 1
+      end
+      if is_match == true
+        Match.create([first_user_id: users[0].id, second_user_id: users[count].id])
+        users.delete_at(0)
+        users.delete_at(count)
+      else
+        p "shitballs"
       end
     end
   end
