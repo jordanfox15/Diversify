@@ -172,15 +172,12 @@
 
 .controller('MatchesController', ['$scope', '$http', '$window', function($scope, $http, $window){
   $scope.currentUserId = $window.sessionStorage.userId
-  console.log($window.sessionStorage.userId)
-  console.log($scope.currentUserId)
   $http({
     method: 'GET',
   url: 'http://localhost:3000/api/matches',
   headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
   }
   }).success(function(data){
-    console.log(data)
     $scope.matches = data
 
   }).error(function(error){
@@ -226,8 +223,6 @@ $http({
   headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
   }
 }).success(function(data){
-  console.log("messages data here:")
-  console.log(data)
   $scope.messages = data
 
 }).error(function(error){
@@ -240,7 +235,6 @@ $http({
   headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
   }
 }).success(function(data){
-  console.log(data)
   $scope.match = data
 
 }).error(function(error){
@@ -264,26 +258,10 @@ $scope.processForm= function(){
 headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
     }).success(function(data){
       var matchId = $scope.match.id
-      console.log ($window.sessionStorage.userId)
       $state.reload();
     });
 };
 }])
-
-// .controller('ShowController', ['$state', '$stateParams', '$scope', '$http', function($state, $stateParams, $scope, $http){
-
-//   var teacherId = $stateParams.teacherId
-//   $http({
-//     method: 'GET',
-//     dataType: 'json',
-//     url: 'http://localhost:3000/v1/api/teachers/' + teacherId
-//   }).success(function(data){
-//     $scope.teacher = data
-//   }).error(function(error){
-//     console.log(error);
-//   })
-
-// }])
 
 .controller("loginController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
   $scope.user = {};
@@ -295,7 +273,6 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
     }).success(function(data){
       $window.sessionStorage.accessToken = data.token;
       $window.sessionStorage.userId = data.user.id;
-      console.log ($window.sessionStorage.userId)
       $state.go('profile')
     });
   };
@@ -309,7 +286,6 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
     headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
     }
   }).success(function(data){
-    console.log(data)
     $scope.user = data
   });
 }])
@@ -323,7 +299,6 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
     }
   }).success(function(data){
     $scope.user = data
-    console.log(data)
   });
   $scope.processForm= function(){
     $http({
@@ -345,28 +320,13 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
     headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
     }
   }).success(function(data){
-    console.log("INTERESTS NOW EXISTS!")
     $scope.interests = data
-    console.log(data)
   });
-
-  // $http({
-  //   method: 'GET',
-  //   url: 'http://localhost:3000/api/users/interests',
-  //   headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
-  //   }
-  // }).success(function(data){
-  //     console.log("SELECTED NOW EXISTS!")
-  //     $scope.selected = data
-
-  //     console.log(data)
-  // });
 
   $scope.toggle = function (item, list) {
     var idx = list.indexOf(item);
     if (idx > -1) list.splice(idx, 1);
     else list.push(item);
-    console.log(list)
   };
 
   $scope.exists = function (item, list) {
@@ -423,7 +383,7 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
             method: 'GET',
             url: 'http://localhost:3000/api/matches/random',
           }).success(function(data){
-              console.log(data);
+
           });
     }])
 
@@ -436,19 +396,24 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
 
     .controller("matchInfoController", ['$scope','$window', '$state', '$http', '$stateParams', function($scope, $window, $state, $http, $stateParams){
       $scope.currentUserId = $window.sessionStorage.userId
+      $scope.senderInterests = []
+      $scope.recipientInterests = []
       $http({
     method: 'GET',
     url: 'http://localhost:3000/api/matches/' + $stateParams.matchId ,
     headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
       }
     }).success(function(data){
-      console.log(data)
       $scope.match = data
       if ($scope.match.first_user.id == $scope.currentUserId ){
       var recipientId = $scope.match.second_user.id
+      $scope.recipientName = $scope.match.second_user.first_name + " " + $scope.match.second_user.last_name
+      $scope.currentUserName = $scope.match.first_user.first_name + " " + $scope.match.first_user.last_name
       }
       else if ($scope.match.second_user.id == $scope.currentUserId ){
       var recipientId = $scope.match.first_user.id
+      $scope.recipientName = $scope.match.first_user.first_name + " " + $scope.match.first_user.last_name
+      $scope.currentUserName = $scope.match.second_user.first_name + " " + $scope.match.second_user.last_name
       }
       $http({
     method: 'GET',
@@ -456,9 +421,7 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
     headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
     }
     }).success(function(data){
-      console.log("INTERESTS NOW EXISTS!")
-      $scope.recipientInterests = data
-      console.log(data)
+      $scope.recipientInterests = data.map(function(obj) { return obj.name });
     });
 
     $http({
@@ -467,13 +430,25 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
     headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken
     }
     }).success(function(data){
-      console.log("INTERESTS NOW EXISTS!")
-      $scope.senderInterests = data
-      console.log(data)
+      $scope.senderInterests = data.map(function(obj) { return obj.name });
+
     });
     }).error(function(error){
       console.log(error);
     });
+
+    $scope.$watch("senderInterests", function(newValue, oldValue){
+
+        if (newValue.length > 0){
+          $scope.commonInterests = _.intersection($scope.senderInterests, $scope.recipientInterests)
+        }
+    })
+    $scope.$watch("recipientInterests", function(newValue, oldValue){
+
+        if (newValue.length > 0){
+          $scope.commonInterests = _.intersection($scope.senderInterests, $scope.recipientInterests)
+        }
+    })
 
 
     }])
