@@ -44,9 +44,11 @@ class Api::MatchesController < ApplicationController
 
   def previously_matched(users, matches, is_match, count)
     matches.each do |match|
-      if match.first_user_id == users[0].id.to_s && match.second_user_id == users[count].id.to_s
-        count += 1
-        is_match = false
+      if count < users.length
+        if match.first_user_id == users[0].id.to_s && match.second_user_id == users[count].id.to_s
+          count += 1
+          is_match = false
+        end
       end
     end
     return is_match, count
