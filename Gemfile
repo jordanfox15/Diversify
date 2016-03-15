@@ -30,6 +30,7 @@ gem 'faker'
 gem 'jwt'
 gem 'redis'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'sidekiq'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
