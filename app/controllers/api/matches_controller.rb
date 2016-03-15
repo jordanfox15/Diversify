@@ -28,7 +28,7 @@ class Api::MatchesController < ApplicationController
 
   def random
     # create_match
-    MatchMakingWorker.perform_in(15.seconds)
+    MatchMakingWorker.new.perform_in(15.seconds)
   end
 
   private
