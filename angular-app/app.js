@@ -112,14 +112,6 @@
     }
   }
   })
-  .state('testmatch',{
-    url: '/testmatch',
-    views: {
-      'content':{
-        controller: 'testmatchController'
-      }
-    }
-  })
   .state('topic',{
     url: '/topic',
     views: {
@@ -376,16 +368,6 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
     });
   };
 }])
-
-    .controller("testmatchController", ['$scope', '$http', '$window', '$state', function($scope, $http, $window, $state){
-        $scope.user = {};
-          $http({
-            method: 'GET',
-            url: 'http://localhost:3000/api/matches/random',
-          }).success(function(data){
-
-          });
-    }])
 
     .controller("headerController", ['$scope','$window', '$state', function($scope, $window, $state){
       $scope.loggedOut = function(){
