@@ -29,3 +29,7 @@
 <a ui-sref="interests"><md-button class="md-raised" flex="auto">Your Interests</md-button></a>
 </md-content>
 </main>
+
+<md-switch ng-model="data.cb2" aria-label="Switch 2" ng-true-value="'Inactive'" ng-false-value="'Active'" class="md-warn">
+  Make User Account Inactive: {{ data.cb2 }}
+</md-switch>
