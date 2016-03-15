@@ -19,6 +19,7 @@ countries = ["US", "Mexico", "Canada", "England", "Russia", "Turkey", "Ethiopia"
 interests = ["Acting", "Animals", "Anime", "Arts", "Astronomy", "Baking", "Baseball", "Basketball", "Beauty", "Billiards", "Boating", "Books", "Bowling", "Camping", "Carpentry", "Cars", "Cartoons", "Cats", "Church Activities", "Climbing", "Collecting", "Computers", "Concerts", "Cooking", "Cycling", "Dance", "Dogs", "Drawing", "Driving", "Extreme Sports", "Fashion", "Film making", "Fishing", "Fitness", "Food", "Football", "Gambling", "Games", "Gardening", "Golf", "Health", "Hiking", "History", "Hockey", "Horseback Riding", "Hunting", "Ice skating", "Juggling", "Kayaking", "Knitting", "Literature", "Martial Arts", "Magic", "Motor Sports", "Mountain Biking", "Motorcycling", "Movies", "Music", "Nature", "Paintball", "Painting", "Pets", "Philosophy", "Photography", "Poetry", "Politics", "Pottery", "Psychology", "Puzzles", "Reading", "Religion", "Science", "Singing", "Skateboarding", "Skiing", "Skydiving", "Snowboarding", "Soccer", "Sports", "Statistics", "Surfing", "Swimming", "Tattoos", "Teaching", "Technology", "Television", "Tennis", "Theater", "Travel", "Water Sports", "Wine Tasting", "Wrestling", "Writing", "Yoga"]
 
 User.delete_all
+Demographic.delete_all
 Match.delete_all
 Message.delete_all
 Interest.delete_all
@@ -30,14 +31,18 @@ UserInterest.delete_all
                        last_name: Faker::Name.last_name,
                        email: Faker::Internet.email,
                        password: "password",
-                       password_confirmation: "password",
-                       age: rand(18..80),
-                       gender: ["male", "female", "other"].sample,
-                       race: race.sample,
-                       sex_or: sex_ors.sample,
-                       country: countries.sample,
-                       religion: religions.sample,
-                       ses: ses.sample])
+                       password_confirmation: "password"])
+end
+
+User.all.each do |user|
+  demographics = Demographic.create([age: rand(18..80),
+                                     gender: ["male", "female", "other"].sample,
+                                     race: race.sample,
+                                     sex_or: sex_ors.sample,
+                                     country: countries.sample,
+                                     religion: religions.sample,
+                                     ses: ses.sample,
+                                     user_id: user.id])
 end
 
 user_ids = []
