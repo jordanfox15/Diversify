@@ -141,6 +141,18 @@
     },
     }
   })
+  .state('news', {
+    url: '/news',
+    views: {
+      'header': {
+        templateUrl: '/templates/partials/header.html'
+      },
+    'content': {
+      templateUrl: '/templates/news.html',
+    controller: 'newsController'
+    },
+    }
+  })
 }])
 
 // CONTROLLERS
@@ -174,6 +186,7 @@
 
 
 }])
+
 
 .controller('messagesController', ['$scope', '$http', '$stateParams', '$window', '$state', function($scope, $http, $stateParams, $window, $state){
   $scope.currentUserId = $window.sessionStorage.userId
@@ -439,5 +452,8 @@ headers:{Authorization: "Token token=" + $window.sessionStorage.accessToken}
 
 
     }])
+.controller('AppCtrl', function($scope) {
+  $scope.imagePath = 'img/washedout.png';
+  });
 
 })();
