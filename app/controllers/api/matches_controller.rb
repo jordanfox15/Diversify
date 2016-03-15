@@ -1,8 +1,4 @@
-require 'sidekiq/api'
-
 class Api::MatchesController < ApplicationController
-
-  skip_before_action :authenticate, only: :random
 
   def index
     @user = current_user
@@ -24,7 +20,7 @@ class Api::MatchesController < ApplicationController
 
   def update
     @match = Match.find(params[:id])
-    @match.topic_id = rand(1..(Topic.all.length + 1))
+    @match.topic_id = rand((Topic.first.id)..(Topic.last.id))
       render json: @match
   end
 
