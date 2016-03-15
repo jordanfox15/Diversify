@@ -16,6 +16,8 @@ ses = ["Upper-SES", "Middle-SES", "Low-SES"]
 
 countries = ["US", "Mexico", "Canada", "England", "Russia", "Turkey", "Ethiopia", "France", "Germany", "Brazil", "South Africa", "India", "Iran", "Romania", "Ireland", "Scotland", "Sweden", "Chile", "Argentina", "Kuwait", "Saudi Arabia", "Jordan", "China", "Japan", "Denmark", "Cambodia", "Afghanistan", "Mongolia", "Lithuania", "Czech Republic", "Cuba", "Australia", "New Zealand"]
 
+interests = ["Acting", "Animals", "Anime", "Arts", "Astronomy", "Baking", "Baseball", "Basketball", "Beauty", "Billiards", "Boating", "Books", "Bowling", "Camping", "Carpentry", "Cars", "Cartoons", "Cats", "Church Activities", "Climbing", "Collecting", "Computers", "Concerts", "Cooking", "Cycling", "Dance", "Dogs", "Drawing", "Driving", "Extreme Sports", "Fashion", "Film making", "Fishing", "Fitness", "Food", "Football", "Gambling", "Games", "Gardening", "Golf", "Health", "Hiking", "History", "Hockey", "Horseback Riding", "Hunting", "Ice skating", "Juggling", "Kayaking", "Knitting", "Literature", "Martial Arts", "Magic", "Motor Sports", "Mountain Biking", "Motorcycling", "Movies", "Music", "Nature", "Paintball", "Painting", "Pets", "Philosophy", "Photography", "Poetry", "Politics", "Pottery", "Psychology", "Puzzles", "Reading", "Religion", "Science", "Singing", "Skateboarding", "Skiing", "Skydiving", "Snowboarding", "Soccer", "Sports", "Statistics", "Surfing", "Swimming", "Tattoos", "Teaching", "Technology", "Television", "Tennis", "Theater", "Travel", "Water Sports", "Wine Tasting", "Wrestling", "Writing", "Yoga"]
+
 User.delete_all
 Match.delete_all
 Message.delete_all
@@ -60,9 +62,13 @@ Match.all.each do |match|
                             match_id: match.id])
 end
 
-50.times do
-  interests = Interest.create([name: Faker::Commerce.product_name])
+interests.each do |interest_name|
+  Interest.create(name: interest_name)
 end
+
+# 50.times do
+#   interests = Interest.create([name: interests_collection.sample])
+# end
 
 interest_ids = []
 Interest.all.each do |interest|
