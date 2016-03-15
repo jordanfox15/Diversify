@@ -6,8 +6,6 @@ Rails.application.routes.draw do
     patch 'users/profile' => "users#edit_profile", as: 'edit_profile'
     get 'users/:id/interests' => "users#interests", as: 'user_interests'
 
-    get 'matches/random'
-
     resources :users
     resources :interests
     resources :matches do

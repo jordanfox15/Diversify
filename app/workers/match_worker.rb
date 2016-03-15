@@ -1,3 +1,5 @@
+require 'sidekiq/api'
+
 class MatchMakingWorker
 
   include Sidekiq::Worker
