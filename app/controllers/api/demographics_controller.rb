@@ -1,6 +1,6 @@
 class Api::DemographicsController < ApplicationController
-  skip_before_action :authenticate
-  def categories
+
+  def new
     genders = Gender.all
     countries = Country.all
     races = Race.all
@@ -15,6 +15,6 @@ class Api::DemographicsController < ApplicationController
                   sex_ors: sex_ors,
                   seses: seses
     }
-
   end
+
 end
