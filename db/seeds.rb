@@ -8,7 +8,7 @@
 
 races = ["White", "Black", "Native American", "Latino/Hispanic", "Asian", "Pacific Islander", "Middle Eastern"]
 
-religions = ["Catholicism", "Christiany", "Judaism", "Islam", "Atheism", "Buddhism", "Shintoism", "Hinduism", "Taoism", "Maori", "Wiccan"]
+religions = ["Catholicism", "Christianity", "Judaism", "Islam", "Atheism", "Buddhism", "Shintoism", "Hinduism", "Taoism", "Maori", "Wiccan"]
 
 sex_ors = ["Heterosexual", "Gay/Lesbian", "Queer", "Bisexual", "Transgender", "Asexual"]
 
@@ -19,6 +19,8 @@ seses = ["Upper-SES", "Middle-SES", "Low-SES"]
 countries = ["US", "Mexico", "Canada", "England", "Russia", "Turkey", "Ethiopia", "France", "Germany", "Brazil", "South Africa", "India", "Iran", "Romania", "Ireland", "Scotland", "Sweden", "Chile", "Argentina", "Kuwait", "Saudi Arabia", "Jordan", "China", "Japan", "Denmark", "Cambodia", "Afghanistan", "Mongolia", "Lithuania", "Czech Republic", "Cuba", "Australia", "New Zealand"]
 
 interests = ["Acting", "Animals", "Anime", "Arts", "Astronomy", "Baking", "Baseball", "Basketball", "Beauty", "Billiards", "Boating", "Books", "Bowling", "Camping", "Carpentry", "Cars", "Cartoons", "Cats", "Church Activities", "Climbing", "Collecting", "Computers", "Concerts", "Cooking", "Cycling", "Dance", "Dogs", "Drawing", "Driving", "Extreme Sports", "Fashion", "Film making", "Fishing", "Fitness", "Food", "Football", "Gambling", "Games", "Gardening", "Golf", "Health", "Hiking", "History", "Hockey", "Horseback Riding", "Hunting", "Ice skating", "Juggling", "Kayaking", "Knitting", "Literature", "Martial Arts", "Magic", "Motor Sports", "Mountain Biking", "Motorcycling", "Movies", "Music", "Nature", "Paintball", "Painting", "Pets", "Philosophy", "Photography", "Poetry", "Politics", "Pottery", "Psychology", "Puzzles", "Reading", "Religion", "Science", "Singing", "Skateboarding", "Skiing", "Skydiving", "Snowboarding", "Soccer", "Sports", "Statistics", "Surfing", "Swimming", "Tattoos", "Teaching", "Technology", "Television", "Tennis", "Theater", "Travel", "Water Sports", "Wine Tasting", "Wrestling", "Writing", "Yoga"]
+
+topics = ["#MarchMadness", "#Elections2016", "Iphone or Android?", "Cats or Dogs?", "#BlackLivesMatter", "Is global warming an issue?", "How many countries have you visited?", "Favorite cultural foods?", "What are some issues impacting your culture?", "Are you religious?", "Do you play any instruments?", "What do you think about the supreme court gay marriage verdict?", "How do you feel about immigration?", "Beach or the forest?", "If you could move anywhere, where would you go?", "Do you like musicals?", "What's your least favorite city?", "Books", "Mental Health", "Healthcare", "Gun rights", "Feminism", "Gender Change", "Game of Thrones", "North Korea", "War", "Refugee Crisis", "Islamophobia", "Favorite TV show", "Favorite board/card game", "Walking Dead", "Marvel or DC?", "Favorite movie"]
 
 User.delete_all
 Demographic.delete_all
@@ -110,10 +112,6 @@ interests.each do |interest_name|
   Interest.create(name: interest_name)
 end
 
-# 50.times do
-#   interests = Interest.create([name: interests_collection.sample])
-# end
-
 interest_ids = []
 Interest.all.each do |interest|
   interest_ids.push(interest.id)
@@ -126,8 +124,8 @@ User.all.each do |user|
   end
 end
 
-15.times do
-  topics = Topic.create([ name: Faker::Commerce.department(1)])
+topics.each do |topic|
+  Topic.create(name: topic)
 end
 
 

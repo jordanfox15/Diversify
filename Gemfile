@@ -25,6 +25,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'dotenv-rails'
+
 
 gem 'faker'
 gem 'jwt'
@@ -32,6 +35,8 @@ gem 'redis'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'sidekiq'
 gem 'whenever', :require => false
+gem "letter_opener"
+gem "launchy"
 
 # Use Unicorn as the app server
 # gem 'unicorn'

@@ -36,6 +36,18 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
+  # to be appraised of mailing errors
+  config.action_mailer.raise_delivery_errors = true
+  # to deliver to the browser instead of email
+  config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.smtp_settings = {
+  # address:              'smtp.gmail.com',
+  # port:                 587,
+  # domain:               'https://dashboard.heroku.com/apps/fast-ridge-24283',
+  # user_name:            'diversifyapps@gmail.com',
+  # password:             'echo $EM_PS',
+  # authentication:       'plain',
+  # enable_starttls_auto: true  }
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
