@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     patch 'users/profile' => "users#edit_profile", as: 'edit_profile'
     get 'users/:id/interests' => "users#interests", as: 'user_interests'
 
+    resources :demographics
     resources :users
     resources :interests
     resources :matches do

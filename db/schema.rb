@@ -11,22 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315223236) do
+ActiveRecord::Schema.define(version: 20160316003102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+  end
+
   create_table "demographics", force: :cascade do |t|
     t.integer  "age"
-    t.string   "gender"
-    t.string   "race"
-    t.string   "sex_or"
-    t.string   "country"
-    t.string   "religion"
-    t.string   "ses"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "gender_id"
+    t.integer  "race_id"
+    t.integer  "sex_or_id"
+    t.integer  "country_id"
+    t.integer  "religion_id"
+    t.integer  "ses_id"
+  end
+
+  create_table "genders", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "interests", force: :cascade do |t|
@@ -58,6 +66,22 @@ ActiveRecord::Schema.define(version: 20160315223236) do
     t.string   "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "races", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "religions", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "ses", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "sex_ors", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "topics", force: :cascade do |t|
