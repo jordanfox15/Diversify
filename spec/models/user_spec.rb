@@ -50,22 +50,6 @@ describe User do
     expect(user.errors[:password_digest]).to include("can't be blank")
   end
 
-  it "is invalid without a unique password" do
-    User.create(
-      first_name: 'Cloud',
-      last_name: 'Strife',
-      email: 'fatsword@midgar.com',
-      password_digest: 'password')
-
-    user = User.new(
-      first_name: 'Tifa',
-      last_name: 'Lockhart',
-      email: 'punchgloves@midgar.com',
-      password_digest: 'password')
-    user.valid?
-    expect(user.errors[:password_digest]).to include("has already been taken")
-  end
-
   it "is invalid without a unique email" do
     User.create(
       first_name: 'Cloud',
