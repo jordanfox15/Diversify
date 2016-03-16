@@ -91,6 +91,36 @@ class MatchMakingWorker
       end
     end
 
+    def create_match_emails
+
+      user_emails = ""
+      recent_matches = ""
+      User.all.each do |user|
+        recent_match = []
+        recent_match.push(user.first_user_matches.last)
+        recent_match.push(user.second_user_matches.last)
+        recent_match.compact!
+
+        if recent_match.length > 0
+          user_emails += (user.email + " ")
+
+          if recent_match.length > 1
+            recent_match.sort! {|x, y| y.created_at <=> x.created_at}
+          end
+
+          if user.id.to_s == recent_match[0].first_user_id
+            recent_matches += (User.find(recent_match[0].second_user_id).first_name + " " + User.find(recent_match[0].second_user_id).last_name + ".")
+          else
+            recent_matches += (User.find(recent_match[0].first_user_id).first_name + " " + User.find(recent_match[0].first_user_id).last_name + ".")
+          end
+        end
+      end
+
+      h = JSON.generate({'emails' => user_emails.chop, 'names' => recent_matches.chop})
+      MatchMailWorker.perform_async(h, 5)
+
+    end
+
     users = []
     User.all.each do |user|
       users.push(user)
@@ -109,10 +139,17 @@ class MatchMakingWorker
 
     if users.length >= 2
       Match.create([first_user_id: users[0].id, second_user_id: users[1].id])
+      users.delete_at(0)
+      users.delete_at(0)
     end
 
-    no_matches.push(users[0])
+    if users.length != 0
+      no_matches.push(users[0])
+    end
+
     create_non_matched_matches(no_matches)
+
+    create_match_emails
 
   end
 

@@ -2,7 +2,7 @@
 
 class PostmanWorker
   include Sidekiq::Worker
-
+  sidekiq_options retry: false
 
   def perform(h, count)
     h = JSON.load(h)
