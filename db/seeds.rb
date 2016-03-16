@@ -67,7 +67,7 @@ country_objs = Country.all
 religion_objs = Religion.all
 ses_objs = Ses.all
 
-20.times do
+6.times do
   users = User.create([first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
                        email: Faker::Internet.email,
@@ -118,7 +118,7 @@ Interest.all.each do |interest|
 end
 
 User.all.each do |user|
-  5.times do
+  10.times do
     user_interests = UserInterest.create([ user_id: user.id,
                                            interest_id: interest_ids.sample])
   end
