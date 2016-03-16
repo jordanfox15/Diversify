@@ -48,7 +48,7 @@ class MatchMakingWorker
 
     def mis_match(users, count)
       not_match = false
-      if users[0].race != users[count].race || users[0].sex_or != users[count].sex_or || users[0].country != users[count].country || users[0].religion != users[count].religion || users[0].ses != users[count].ses
+      if users[0].demographic.race != users[count].demographic.race || users[0].demographic.sex_or != users[count].demographic.sex_or || users[0].demographic.country != users[count].demographic.country || users[0].demographic.religion != users[count].demographic.religion || users[0].demographic.ses != users[count].demographic.ses
         not_match = true
       end
       return count, not_match
