@@ -18,3 +18,5 @@
 
 #Ignore Redis dump
 *.rdb
+
+.env

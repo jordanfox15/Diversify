@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     delete "sessions" => "sessions#destroy", :as => "sessions"
     resources :sessions
   end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
