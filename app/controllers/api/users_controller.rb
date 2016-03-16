@@ -3,7 +3,7 @@ class Api::UsersController < ApplicationController
 
   def profile
     @user = current_user
-    render json: @user, :include => :interests
+    render json: @user, :include => [:interests, :demographic ]
   end
 
   def edit_profile
@@ -22,6 +22,8 @@ class Api::UsersController < ApplicationController
     @user.password = params[:password]
     @user.password_confirmation = params[:password_confirmation]
     if @user.save!
+      demographic = Demographic.new
+      @user.demographic = demographic
       token = AuthToken.issue(user_id: @user.id)
       $redis.hset(token, 'user_id', @user.id)
       $redis.expire(token, 60.minutes.to_i)
