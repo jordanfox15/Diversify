@@ -17,4 +17,17 @@ class Api::DemographicsController < ApplicationController
     }
   end
 
+  def update
+    user = current_user
+    demographic = user.demographic
+    demographic.update(demographic_params)
+    render json: demographic
+  end
+
+  private
+
+  def demographic_params
+    params.require(:demographic).permit(:age, :gender_id, :country_id, :race_id, :religion_id, :sex_or_id, :ses_id)
+  end
+
 end
