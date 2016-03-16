@@ -67,7 +67,7 @@ country_objs = Country.all
 religion_objs = Religion.all
 ses_objs = Ses.all
 
-6.times do
+20.times do
   users = User.create([first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
                        email: Faker::Internet.email,
