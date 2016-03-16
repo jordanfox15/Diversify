@@ -1,2 +1,2 @@
-class Api::DemographicController < ApplicationController
+class Api::DemographicsController < ApplicationController
 end

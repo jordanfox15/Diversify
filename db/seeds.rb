@@ -36,7 +36,7 @@ end
 
 User.all.each do |user|
   demographics = Demographic.create([age: rand(18..80),
-                                     gender: ["male", "female", "other"].sample,
+                                     gender: ["Male", "Female", "Other"].sample,
                                      race: race.sample,
                                      sex_or: sex_ors.sample,
                                      country: countries.sample,
