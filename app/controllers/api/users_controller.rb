@@ -28,6 +28,8 @@ class Api::UsersController < ApplicationController
       $redis.hset(token, 'user_id', @user.id)
       $redis.expire(token, 60.minutes.to_i)
       render json: {user: @user, token: token}
+      h=JSON.generate({'email' => params[:email]})
+      PostmanWorker.perform_async(h,5)
     else
       render json: @user.errors
     end
