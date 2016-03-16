@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe User do
+
   it "is valid with a first name, last name, email, and password" do
     user = User.new(
       first_name: 'Cloud',
@@ -24,7 +25,7 @@ describe User do
     user = User.new(
       first_name: 'Cloud',
       last_name: '',
-      email: 'fatsword@midgar.com',
+      email: 'bustersword@midgar.com',
       password_digest: 'password')
     user.valid?
     expect(user.errors[:last_name]).to include("can't be blank")

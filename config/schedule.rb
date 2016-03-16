@@ -19,6 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 1.day do
+every 1.minutes do
   rake "create_matches:match"
 end
