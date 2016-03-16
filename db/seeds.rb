@@ -118,7 +118,7 @@ Interest.all.each do |interest|
 end
 
 User.all.each do |user|
-  5.times do
+  10.times do
     user_interests = UserInterest.create([ user_id: user.id,
                                            interest_id: interest_ids.sample])
   end
