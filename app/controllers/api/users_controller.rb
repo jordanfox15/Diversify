@@ -19,8 +19,8 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.password = params[:password]
-    @user.password_confirmation = params[:password_confirmation]
+    p params
+    p @user
     if @user.save!
       demographic = Demographic.new
       @user.demographic = demographic
@@ -49,7 +49,7 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :race, :email, :religion, :sex_or, :ses, :country, :gender, :age, :interest_ids => [])
+    params.require(:user).permit(:first_name, :last_name, :race, :email, :religion, :sex_or, :ses, :country, :gender, :age, :avatar, :password, :password_confirmation, :interest_ids => [] )
   end
 
 
