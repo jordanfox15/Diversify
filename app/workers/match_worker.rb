@@ -48,7 +48,7 @@ class MatchMakingWorker
 
     def mis_match(users, count)
       not_match = false
-      if users[0].demographic.race != users[count].demographic.race || users[0].demographic.sex_or != users[count].demographic.sex_or || users[0].demographic.country != users[count].demographic.country || users[0].demographic.religion != users[count].demographic.religion || users[0].demographic.ses != users[count].demographic.ses
+      if users[0].race != users[count].race || users[0].sex_or != users[count].sex_or || users[0].country != users[count].country || users[0].religion != users[count].religion || users[0].ses != users[count].ses
         not_match = true
       end
       return count, not_match
@@ -63,7 +63,6 @@ class MatchMakingWorker
     def match_calls(users, matches, no_matches, count = 1)
 
       count = match_users(users, matches, count)
-
       if count >= users.length && users.length > 0
         no_matches.push(users[0])
         users.delete_at(0)
@@ -112,6 +111,7 @@ class MatchMakingWorker
       Match.create([first_user_id: users[0].id, second_user_id: users[1].id])
     end
 
+    no_matches.push(users[0])
     create_non_matched_matches(no_matches)
 
   end
