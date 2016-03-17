@@ -11,6 +11,11 @@ class Api::UsersController < ApplicationController
     render json: {url: @user.avatar.url(:thumb)}
   end
 
+  def recipient_picture
+    @user = params[:id]
+    render json: {url: @user.avatar.url(:thumb)}
+  end
+
   def edit_profile
     @user = current_user
       @user.update(user_params)
