@@ -72,7 +72,8 @@ ses_objs = Ses.all
                        last_name: Faker::Name.last_name,
                        email: Faker::Internet.email,
                        password: "password",
-                       password_confirmation: "password"])
+                       password_confirmation: "password",
+                       avatar: File.open("#{Rails.root}/spec/fixtures/default-photo.png")])
 end
 
 User.all.each do |user|
