@@ -21,10 +21,11 @@
   - User is automatically switched if there is no communication
   - User can make their profile inactive
   - Scheduling the match switch to run automatically
-  - 
+  -
 
 Deployment of this app will be on Amazon Web services
 
-Currently there are no restriction to use this code. 
+Currently there are no restriction to use this code.
   Backend is Ruby on Rails
   Front end is Angular 1
+
