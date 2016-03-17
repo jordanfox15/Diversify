@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'users/profile'
+    get 'users/profile_picture'
     patch 'users/profile' => "users#edit_profile", as: 'edit_profile'
     get 'users/:id/interests' => "users#interests", as: 'user_interests'
 

@@ -41,7 +41,15 @@ Rails.application.configure do
   # to deliver to the browser instead of email
   config.action_mailer.delivery_method = :letter_opener
   Paperclip.options[:command_path] = "/usr/local/bin/"
-
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials =>{
+      :bucket => ENV['S3_BUCKET_NAME'],
+      :s3_region => ENV['AWS_S3_REGION'],
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    }
+  }
   # config.action_mailer.smtp_settings = {
   # address:              'smtp.gmail.com',
   # port:                 587,
