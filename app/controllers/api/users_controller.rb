@@ -3,7 +3,7 @@ class Api::UsersController < ApplicationController
 
   def profile
     @user = current_user
-    render json: @user, :include => [:interests, :demographic ]
+    render json: @user, :include => [:interests, :demographic, :religion, :sex_or, :ses, :country, :gender, :race]
   end
 
   def profile_picture

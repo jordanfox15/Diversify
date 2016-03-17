@@ -12,7 +12,7 @@ religions = ["Catholicism", "Christianity", "Judaism", "Islam", "Atheism", "Budd
 
 sex_ors = ["Heterosexual", "Gay/Lesbian", "Queer", "Bisexual", "Transgender", "Asexual"]
 
-genders = ["Female", "Non-binary/Other", "Male"]
+genders = ["Female", "Other", "Male"]
 
 seses = ["Upper-SES", "Middle-SES", "Low-SES"]
 
