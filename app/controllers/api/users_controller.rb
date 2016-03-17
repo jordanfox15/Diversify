@@ -24,8 +24,6 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    p params
-    p @user
     if @user.save!
       demographic = Demographic.new
       @user.demographic = demographic
