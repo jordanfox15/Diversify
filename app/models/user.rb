@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
 
 validates :first_name, :last_name, :password_digest, presence: true
 validates :email, presence: true, uniqueness: true
+validates_format_of :email, :with => /.+@.+\..+/i
 
 def age
   self.demographic.age
