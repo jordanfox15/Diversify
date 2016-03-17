@@ -9,7 +9,7 @@ class Api::MatchesController < ApplicationController
   def show
     @user = current_user
     @match = Match.find(params[:id])
-      render json:  @match, :include => [:first_user, :second_user]
+      render json:  @match, :include => [:first_user, :second_user, :topic]
   end
 
 #  Create action - Not needed for front end use
@@ -20,8 +20,11 @@ class Api::MatchesController < ApplicationController
 
   def update
     @match = Match.find(params[:id])
-    @match.topic_id = rand((Topic.first.id)..(Topic.last.id))
-      render json: @match
+    topic =  Topic.find(rand((Topic.first.id)..(Topic.last.id)))
+    @match.topic = topic
+    @match.save
+
+      render json: @match, include: :topic
   end
 
   private

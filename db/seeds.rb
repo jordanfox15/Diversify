@@ -92,6 +92,10 @@ User.all.each do |user|
   user_ids.push(user.id)
 end
 
+topics.each do |topic|
+  Topic.create(name: topic)
+end
+
 20.times do
   matches = Match.create([first_user_id: user_ids.sample,
                           second_user_id: user_ids.sample])
@@ -125,9 +129,6 @@ User.all.each do |user|
   end
 end
 
-topics.each do |topic|
-  Topic.create(name: topic)
-end
 
 
 
