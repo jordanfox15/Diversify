@@ -6,6 +6,11 @@ class Api::UsersController < ApplicationController
     render json: @user, :include => [:interests, :demographic ]
   end
 
+  def profile_picture
+    @user = current_user
+    render json: {url: @user.avatar.url(:thumb)}
+  end
+
   def edit_profile
     @user = current_user
       @user.update(user_params)
@@ -19,8 +24,6 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.password = params[:password]
-    @user.password_confirmation = params[:password_confirmation]
     if @user.save!
       demographic = Demographic.new
       @user.demographic = demographic
@@ -49,7 +52,7 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :race, :email, :religion, :sex_or, :ses, :country, :gender, :age, :interest_ids => [])
+    params.require(:user).permit(:first_name, :last_name, :race, :email, :religion, :sex_or, :ses, :country, :gender, :age, :avatar, :password, :password_confirmation, :interest_ids => [] )
   end
 
 
