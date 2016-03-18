@@ -149,7 +149,7 @@ class MatchMakingWorker
 
     create_non_matched_matches(no_matches)
 
-    create_match_emails
+    # create_match_emails
 
   end
 

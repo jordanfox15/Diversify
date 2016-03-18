@@ -3,8 +3,13 @@ class Api::MessagesController < ApplicationController
   def index
     @match = Match.find(params[:match_id])
     @messages = @match.messages
-      render json: @messages, :include => [:recipient, :sender]
+    render json: @messages, :include => [:recipient, :sender]
   end
+
+  # def profile_picture
+  #   @user = current_user
+  #   render json: {url: @user.avatar.url(:thumb)}
+  # end
 
   def create
     @message = Message.new(message_params)

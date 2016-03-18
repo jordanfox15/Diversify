@@ -12,6 +12,7 @@ class Api::MatchesController < ApplicationController
       render json:  @match, :include => [:first_user, :second_user, :topic]
   end
 
+
 #  Create action - Not needed for front end use
 #  def create
 #    @match = Match.new(match_params)
