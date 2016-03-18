@@ -119,7 +119,7 @@ end
 
 interest_ids = []
 Interest.all.each do |interest|
-  interest_ids.push(interest.name)
+  interest_ids.push(interest.id)
 end
 
 User.all.each do |user|
