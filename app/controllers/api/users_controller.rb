@@ -25,7 +25,7 @@ class Api::UsersController < ApplicationController
 
   def interests
     @user = User.find(params[:id])
-    render json: @user.interests
+    render json: @user.interest_ids
   end
 
   def create
