@@ -13,8 +13,8 @@ class Api::UsersController < ApplicationController
   end
 
   def recipient_picture
-    @user = params[:id]
-    render json: {url: @user.avatar.url(:thumb)}
+    @user = User.find(params[:id])
+    render json: @user.avatar.url
   end
 
   def edit_profile

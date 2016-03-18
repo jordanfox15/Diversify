@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     get 'users/:id/interests' => "users#interests", as: 'user_interests'
 
     resources :demographics
-    resources :users
+    resources :users do
+      member {get :recipient_picture}
+    end
     resources :interests
     resources :matches do
       resources :messages
