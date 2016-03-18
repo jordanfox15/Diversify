@@ -8,10 +8,6 @@ class Api::MatchesController < ApplicationController
 
   def show
     @user = current_user
-    blah = []
-    # @user.interests.each do |interest|
-    #   blah.push(interest.name)
-    # end
     @match = Match.find(params[:id])
       render json:  @match, :include => [:first_user, :second_user, :topic]
   end
