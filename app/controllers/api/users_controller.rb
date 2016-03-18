@@ -12,6 +12,11 @@ class Api::UsersController < ApplicationController
     render json: {url: @user.avatar.url(:thumb)}
   end
 
+  def recipient_picture
+    @user = User.find(params[:id])
+    render json: @user.avatar.url
+  end
+
   def edit_profile
     @user = current_user
       @user.update(user_params)
@@ -20,7 +25,7 @@ class Api::UsersController < ApplicationController
 
   def interests
     @user = User.find(params[:id])
-    render json: @user.interests
+    render json: @user.interest_ids
   end
 
   def create
