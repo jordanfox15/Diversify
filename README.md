@@ -44,3 +44,6 @@ A web application to connect people across the world with others that have a dif
 Deployment of this app will be on Heroku
 
 Currently there are no restriction to use this code.
+
+  Backend is Ruby on Rails
+  Front end is Angular 1
