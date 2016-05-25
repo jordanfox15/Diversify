@@ -39,7 +39,7 @@ A web application to connect people across the world with others that have a dif
   - Monique Williamson: moniquewill1@yahoo.com
   - Kevin Huang: kevin.ziwen.huang@gmail.com
   - Albert Hahn: xaphx@yahoo.com
-  - Jordan Fox: jordanfox15@hotmail.com
+  - Jordan Fox: jordanfox1551@gmail.com
 
 Deployment of this app will be on Heroku
 
