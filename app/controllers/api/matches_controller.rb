@@ -1,12 +1,14 @@
 class Api::MatchesController < ApplicationController
 
   def index
+    p "*" * 80
     @user = current_user
     @matches = @user.first_user_matches + @user.second_user_matches
       render json: @matches, :include =>  [:first_user, :second_user]
   end
 
   def show
+    p "%" * 80
     @user = current_user
     @match = Match.find(params[:id])
       render json:  @match, :include => [:first_user, :second_user, :topic]

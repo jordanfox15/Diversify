@@ -1,5 +1,13 @@
 # Diversify
-A web application to connect people across the world with others that have a different demographic profile, but similar interests.
+
+## Description
+This is an app that was designed to fight intolerance and prejudice by linking together users who share similar interests but have different demographics.  For two weeks two users would be matched and could communicate by sending messages through the app in real time.  At the end of those two weeks all users would be provided a new match.
+
+## Features
+This is a decoupled app with a Rails API back-end and an Angular 1 front-end.  Users receive a match every two weeks and can message any of their matches in real time.
+
+## Technologies Used
+
 
 ### MVP
   - Create interests and demographics sheet
