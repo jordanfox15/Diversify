@@ -36,26 +36,8 @@ This is a decoupled app with a Rails API back-end and an Angular 1 front-end in 
   - User can make their profile inactive
   - Scheduling the match switch to run automatically
 
-## Technology
-  - Javascript
-  - AngularJS
-  - Ruby
-  - Rails
-  - PostgreSQL
-  - Redis
-  - HTML5
-  - CSS3
-  - Heroku
-
 ## Team
   - Monique Williamson: moniquewill1@yahoo.com
   - Kevin Huang: kevin.ziwen.huang@gmail.com
   - Albert Hahn: xaphx@yahoo.com
   - Jordan Fox: jordanfox1551@gmail.com
-
-Deployment of this app will be on Heroku
-
-Currently there are no restriction to use this code.
-
-  Backend is Ruby on Rails
-  Front end is Angular 1
