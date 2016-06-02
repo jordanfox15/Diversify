@@ -1,12 +1,16 @@
 # Diversify
+Front End Repo: https://github.com/jordanfox15/Diversify-app
 
 ## Description
 This is an app that was designed to fight intolerance and prejudice by linking together users who share similar interests but have different demographics.  For two weeks two users would be matched and could communicate by sending messages through the app in real time.  At the end of those two weeks all users would be provided a new match.
 
 ## Features
-This is a decoupled app with a Rails API back-end and an Angular 1 front-end.  Users receive a match every two weeks and can message any of their matches in real time.
+This is a decoupled app with a Rails API back-end and an Angular 1 front-end in separate repo's.  Users receive a match every two weeks and can message any of their matches in real time.
 
 ## Technologies Used
+* Back End: Rails API, ActiveRecord, PostgreSQL, Sidekiq
+* Front End: AngularJS, Socket.IO, Javascript, HTML5, CSS3
+* Both: Redis
 
 
 ### MVP
