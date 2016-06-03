@@ -1,6 +1,8 @@
 # Diversify
 Front End Repo: https://github.com/jordanfox15/Diversify-app
 
+![Home Page](/app/assets/images/homepage.png)
+
 ## Description
 This is an app that was designed to fight intolerance and prejudice by linking together users who share similar interests but have different demographics.  For two weeks two users would be matched and could communicate by sending messages through the app in real time.  At the end of those two weeks all users would be provided a new match.
 
